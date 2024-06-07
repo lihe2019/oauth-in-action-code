@@ -46,9 +46,10 @@ app.get('/', function(req, res) {
 	res.render('index', {clients: clients, authServer: authServer});
 });
 
-app.get("/authorize", function(req, res){
-	
+app.get("/authorize", function(req, res){	
 	var client = getClient(req.query.client_id);
+	console.log('req.query: ', req.query);
+	console.log('client_id: ', client);
 	
 	if (!client) {
 		console.log('Unknown client %s', req.query.client_id);
@@ -181,6 +182,8 @@ app.post("/token", function(req, res){
 		res.status(401).json({error: 'invalid_client'});
 		return;
 	}
+	
+	console.log('req_body: ', req.body);
 	
 	if (req.body.grant_type == 'authorization_code') {
 		
